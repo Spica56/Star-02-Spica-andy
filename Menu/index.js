@@ -1,9 +1,15 @@
-import { Client, Collection } from 'discord.js';
-import keepAlive from './server.js';
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import { readdirSync as _readdirSync } from 'fs';
+import keepAlive from './server.js'; // Si tu server.js contiene lógica para mantener vivo el bot, mantén esto.
 
-const client = new Client();
-const express = require("express")().get("/", (req, res) => res.send("Bot Activado")).listen(3000);
+// Crear una nueva instancia del cliente con los intents necesarios
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds, // Intents para eventos relacionados con servidores
+    GatewayIntentBits.GuildMessages, // Intents para recibir mensajes en los servidores
+    GatewayIntentBits.MessageContent // Necesario para leer el contenido de los mensajes
+  ]
+});
 
 // Inicializa la colección de comandos
 client.commands = new Collection();
@@ -23,8 +29,8 @@ function loadCommands() {
   }
 }
 
-// Evento 'ready'
-client.on('ready', () => {
+// Evento 'ready' cuando el bot está en línea
+client.once('ready', () => {
   setPresence();
   console.log('¡Wenos diaas!');
 });
@@ -33,17 +39,20 @@ client.on('ready', () => {
 function setPresence() {
   client.user.setPresence({
     status: 'idle',
-    activity: {
-      name: 'Whole Lotta Love',
-      type: 'LISTENING',
-    },
+    activities: [
+      {
+        name: 'Whole Lotta Love',
+        type: 'LISTENING', // Tipo de presencia actualizado
+      }
+    ],
   });
 }
 
 // Maneja los mensajes
-client.on('message', (message) => {
+client.on('messageCreate', (message) => { // Cambiado a 'messageCreate'
   const prefix = 'Star, ';
-  
+
+  // Ignorar mensajes de bots o que no comienzan con el prefijo
   if (message.author.bot || !message.content.startsWith(prefix)) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -62,7 +71,10 @@ client.on('message', (message) => {
   }
 });
 
-// Inicia sesión con el token
+// Inicia el servidor Express para mantener el bot vivo (si es necesario)
+keepAlive();
+
+// Inicia sesión con el token del bot
 const mySecret = process.env['TOKEN'];
 client.login(mySecret).catch(error => {
   console.error('Error al iniciar sesión:', error);

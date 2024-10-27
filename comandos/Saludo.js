@@ -1,9 +1,4 @@
-import Discord from 'discord.js';
-
-export const name = "hi";
-export const alias = ["holah", "Holah", "Helloh", "Halloh"];
-
-export function execute(client, message, args) {
+export async function execute(client, message, args) {
     const username = message.author.username; // Obtiene el nombre de usuario
     const customGreeting = args.length ? args.join(' ') : 'querido usuario'; // Mensaje personalizado
     const greetings = [
@@ -13,5 +8,5 @@ export function execute(client, message, args) {
     ];
     
     const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-    message.channel.send(randomGreeting);
+    await message.channel.send(randomGreeting); // Espera a que se envíe el mensaje
 }

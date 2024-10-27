@@ -1,0 +1,23 @@
+[33mcommit be55b40e1fdd639cb5834582457243e13a0e6619[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Spica56 <88848154+Spica56@users.noreply.github.com>
+Date:   Sun Oct 27 03:18:17 2024 +0000
+
+    Error de uso de require e import solucionado
+
+[33mcommit 4af3604f2ef59d6b989abf29b82943e4bfc9f929[m
+Author: andy55 <andresmartinezbadillo55@gmail.com>
+Date:   Sat Oct 26 19:20:14 2024 -0600
+
+    Error de carga de archivos en vsCode corregido
+
+[33mcommit 286c502436ff9e4d84f1ec7e0b677257aec09079[m
+Author: andy55 <andresmartinezbadillo55@gmail.com>
+Date:   Sat Oct 26 18:15:49 2024 -0600
+
+    index añadido con comando de prueba (primer entrega)
+
+[33mcommit c087255d59ec25b695cd32504ce3000a381277f9[m
+Author: andy55 <andresmartinezbadillo55@gmail.com>
+Date:   Sat Oct 26 16:46:02 2024 -0600
+
+    Inicial commit del proyecto

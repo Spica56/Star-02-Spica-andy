@@ -50,7 +50,7 @@ function setPresence() {
 
 // Maneja los mensajes
 client.on('messageCreate', (message) => { // Cambiado a 'messageCreate'
-  const prefix = 'Star, ';
+  const prefix = 'S.';
 
   // Ignorar mensajes de bots o que no comienzan con el prefijo
   if (message.author.bot || !message.content.startsWith(prefix)) return;
@@ -60,6 +60,8 @@ client.on('messageCreate', (message) => { // Cambiado a 'messageCreate'
 
   const cmd = client.commands.get(commandName) || 
               client.commands.find(c => c.alias && c.alias.includes(commandName));
+    console.log(`Comando buscado: ${commandName}`); // Para verificar qué comando se está buscando
+    console.log(`Comando encontrado: ${cmd ? cmd.name : 'No encontrado'}`); // Verifica si el comando fue encontrado            
 
   if (cmd) {
     cmd.execute(client, message, args).catch(error => {
@@ -67,7 +69,7 @@ client.on('messageCreate', (message) => { // Cambiado a 'messageCreate'
       message.reply('Hubo un error al intentar ejecutar ese comando.');
     });
   } else {
-    message.reply('Comando no encontrado.');
+    message.reply('Comando no encontrado: ${commandName}');
   }
 });
 

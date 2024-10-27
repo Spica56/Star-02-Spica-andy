@@ -19,15 +19,15 @@ loadCommands();
 async function loadCommands() {
     const commandFiles = _readdirSync('./comandos').filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
-      try {
-        const command = await import(`../comandos/${file}`);
-        client.commands.set(command.name, command);
-        console.log(`Comando cargado: ${command.name}`);
-      } catch (error) {
-        console.error(`Error al cargar el comando ${file}:`, error);
-      }
+        try {
+            const command = await import(`../comandos/${file}`); // Asegúrate de que la ruta sea correcta
+            client.commands.set(command.name, command); // Asegúrate de que 'command.name' sea correcto
+            console.log(`Comando cargado: ${command.name}`); // Debería mostrar el nombre del comando
+        } catch (error) {
+            console.error(`Error al cargar el comando ${file}:`, error);
+        }
     }
-  }
+}
 
 // Evento 'ready' cuando el bot está en línea
 client.once('ready', () => {
@@ -49,28 +49,28 @@ function setPresence() {
 }
 
 // Maneja los mensajes
-client.on('messageCreate', (message) => { // Cambiado a 'messageCreate'
-  const prefix = 'S.';
+client.on('messageCreate', (message) => {
+    const prefix = 'Star '; // El prefijo que estás utilizando
 
-  // Ignorar mensajes de bots o que no comienzan con el prefijo
-  if (message.author.bot || !message.content.startsWith(prefix)) return;
+    // Ignorar mensajes de bots o que no comienzan con el prefijo
+    if (message.author.bot || !message.content.startsWith(prefix)) return;
 
-  const args = message.content.slice(prefix.length).trim().split(/ +/g);
-  const commandName = args.shift().toLowerCase();
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const commandName = args.shift().toLowerCase(); // Obtener el nombre del comando en minúsculas
 
-  const cmd = client.commands.get(commandName) || 
-              client.commands.find(c => c.alias && c.alias.includes(commandName));
+    const cmd = client.commands.get(commandName) || 
+                client.commands.find(c => c.alias && c.alias.includes(commandName));
     console.log(`Comando buscado: ${commandName}`); // Para verificar qué comando se está buscando
-    console.log(`Comando encontrado: ${cmd ? cmd.name : 'No encontrado'}`); // Verifica si el comando fue encontrado            
+    console.log(`Comando encontrado: ${cmd ? cmd.name : 'No encontrado'}`); // Verifica si el comando fue encontrado
 
-  if (cmd) {
-    cmd.execute(client, message, args).catch(error => {
-      console.error(`Error al ejecutar el comando ${commandName}:`, error);
-      message.reply('Hubo un error al intentar ejecutar ese comando.');
-    });
-  } else {
-    message.reply('Comando no encontrado: ${commandName}');
-  }
+    if (cmd) {
+        cmd.execute(client, message, args).catch(error => {
+            console.error(`Error al ejecutar el comando ${commandName}:`, error);
+            message.reply('Hubo un error al intentar ejecutar ese comando.');
+        });
+    } else {
+        message.reply(`Comando no encontrado: ${commandName}`); // Aquí es donde sale el mensaje
+    }
 });
 
 // Inicia el servidor Express para mantener el bot vivo (si es necesario)

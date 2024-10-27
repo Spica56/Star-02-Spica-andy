@@ -1,3 +1,8 @@
+import { Message } from 'discord.js'; // Asegúrate de importar lo necesario, si es que tienes tipos de TypeScript o similares
+
+export const name = "hi"; // Este debe ser un string
+export const alias = ["holah", "Holah", "Helloh", "Halloh"];
+
 export async function execute(client, message, args) {
     const username = message.author.username; // Obtiene el nombre de usuario
     const customGreeting = args.length ? args.join(' ') : 'querido usuario'; // Mensaje personalizado

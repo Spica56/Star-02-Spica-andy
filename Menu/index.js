@@ -16,18 +16,18 @@ client.commands = new Collection();
 loadCommands();
 
 // Carga los comandos desde la carpeta './comandos'
-function loadCommands() {
-  const commandFiles = _readdirSync('./comandos').filter(file => file.endsWith('.js'));
-  for (const file of commandFiles) {
-    try {
-      const command = require(`./comandos/${file}`);
-      client.commands.set(command.name, command);
-      console.log(`Comando cargado: ${command.name}`);
-    } catch (error) {
-      console.error(`Error al cargar el comando ${file}:`, error);
+async function loadCommands() {
+    const commandFiles = _readdirSync('./comandos').filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+      try {
+        const command = await import(`../comandos/${file}`);
+        client.commands.set(command.name, command);
+        console.log(`Comando cargado: ${command.name}`);
+      } catch (error) {
+        console.error(`Error al cargar el comando ${file}:`, error);
+      }
     }
   }
-}
 
 // Evento 'ready' cuando el bot está en línea
 client.once('ready', () => {

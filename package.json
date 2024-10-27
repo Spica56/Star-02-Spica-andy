@@ -6,10 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Star", "bot", "discord"],
+  "author": "Spica56",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "discord.js": "^14.16.3",
     "express": "^4.21.1"
